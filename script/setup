@@ -1,14 +1,17 @@
 #!/bin/sh
 
 cd ~/
-echo "Installing nvm"
-git clone https://github.com/nvm-sh/nvm.git .nvm
-cd ~/.nvm
 
-. ./nvm.sh
-echo "export NVM_DIR=\"\$HOME/.nvm\"
-[ -s \"\$NVM_DIR/nvm.sh\" ] && \\. \"\$NVM_DIR/nvm.sh\"  # This loads nvm
-[ -s \"\$NVM_DIR/bash_completion\" ] && \. \"\$NVM_DIR/bash_completion\"  # This loads nvm bash_completion" >> ~/.profile
+if [ ! -d .nvm ]; then
+  echo "Installing nvm"
+  git clone https://github.com/nvm-sh/nvm.git .nvm
+  cd ~/.nvm
 
-cd ~/
-nvm --install lts
+  . ./nvm.sh
+  echo "export NVM_DIR=\"\$HOME/.nvm\"
+  [ -s \"\$NVM_DIR/nvm.sh\" ] && \\. \"\$NVM_DIR/nvm.sh\"  # This loads nvm
+  [ -s \"\$NVM_DIR/bash_completion\" ] && \. \"\$NVM_DIR/bash_completion\"  # This loads nvm bash_completion" >> ~/.profile
+
+  cd ~/
+  nvm --install lts
+fi
