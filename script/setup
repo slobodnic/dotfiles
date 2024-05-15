@@ -13,5 +13,7 @@ if [ ! -d .nvm ]; then
   [ -s \"\$NVM_DIR/bash_completion\" ] && \. \"\$NVM_DIR/bash_completion\"  # This loads nvm bash_completion" >> ~/.profile
 
   cd ~/
-  nvm --install lts
+  nvm install --lts
+
+  source ~/.profile
 fi
