@@ -17,3 +17,5 @@ if [ ! -d .nvm ]; then
 
   source ~/.profile
 fi
+
+sudo apt install python3-venv
