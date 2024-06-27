@@ -17,3 +17,7 @@ if [ ! -d .nvm ]; then
 
   source ~/.profile
 fi
+
+if ! grep -q "[[ -r \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\" ]] && . \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\"" ~/.profile; then
+	echo "\n [[ -r \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\" ]] && . \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\"" >> ~/.profile
+fi
