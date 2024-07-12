@@ -1,2 +1,4 @@
 #!/bin/sh
 # Run by Strap after installing Brewfile dependencies
+
+sudo apt install -y python3-venv
