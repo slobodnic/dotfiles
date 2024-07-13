@@ -2,3 +2,5 @@
 # Run by Strap after installing Brewfile dependencies
 
 sudo apt install -y python3-venv
+nvm install --lts
+nvm use --lts
