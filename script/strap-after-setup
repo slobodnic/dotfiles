@@ -1,6 +1,8 @@
 #!/bin/sh
 # Run by Strap after installing Brewfile dependencies
 
+source ~/.profile
+
 sudo apt install -y python3-venv
 
 echo "Installing Node LTS"
