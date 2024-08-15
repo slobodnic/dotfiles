@@ -39,7 +39,7 @@ echo "Adding Homebrew to PATH"
 HOMEBREW_PREFIX=/opt/homebrew
 [ -d $HOMEBREW_PREFIX ] || HOMEBREW_PREFIX=/usr/local/linuxbrew
 LINE_TO_ADD="export PATH=\$PATH:${HOMEBREW_PREFIX}/bin"
-check_if_line_exists || add_line_to_profile
+check_if_line_exists($LINE_TO_ADD) || add_line_to_profile($LINE_TO_ADD)
 
 if [ ! -d .nvm ]; then
   echo "Installing nvm"
