@@ -15,7 +15,7 @@ check_if_line_exists()
 add_line_to_profile()
 {
   profile=$(get_profile_file)
-  log "Adding $LINE_TO_ADD to $profiles"
+  log "Adding $LINE_TO_ADD to $profile"
   printf "%s\n" "$LINE_TO_ADD" >> "$profile"
   source $profile
 }
@@ -27,8 +27,7 @@ get_profile_file()
   [ -f "$profile" ] || profile=~/.zshrc
   [ -f "$profile" ] || profile=~/.bash_profile
   [ -f "$profile" ] || profile=~/.profile
-  [ -f "$profile" ] || touch $profile
-  log "Profile file: $profile"
+  [ -f "$profile" ] || touch $profile  
   echo $profile  	
 }
 
@@ -59,8 +58,9 @@ if [ ! -d .nvm ]; then
 
   cd ~/
   nvm install --lts
+  nvm use --lts
 
-  source ~/.profile
+  source $(get_profile_file)
 fi
 
 if ! grep -q "[[ -r \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\" ]] && . \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\"" ~/.profile; then
