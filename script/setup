@@ -8,16 +8,16 @@ log() {
 
 check_if_line_exists()
 {
-  log "Checking for: $*"
+  log "Checking for: $LINE_TO_ADD"
   # grep wont care if one or both files dont exist.
-  grep -qsFx "$*" ~/.profile ~/.bash_profile ~/.bashrc ~/.zshrc
+  grep -qsFx "$LINE_TO_ADD" ~/.profile ~/.bash_profile ~/.bashrc ~/.zshrc
 }
 
 add_line_to_profile()
 {
   profile=$(get_profile_file)
-  log "Adding $* to $profiles"
-  printf "%s\n" "$*" >> "$profile"
+  log "Adding $LINE_TO_ADD to $profiles"
+  printf "%s\n" "$LINE_TO_ADD" >> "$profile"
   source $profile
 }
 
@@ -39,7 +39,7 @@ echo "Adding Homebrew to PATH"
 HOMEBREW_PREFIX=/opt/homebrew
 [ -d $HOMEBREW_PREFIX ] || HOMEBREW_PREFIX=/usr/local/linuxbrew
 LINE_TO_ADD="export PATH=\$PATH:${HOMEBREW_PREFIX}/bin"
-check_if_line_exists($LINE_TO_ADD) || add_line_to_profile($LINE_TO_ADD)
+check_if_line_exists || add_line_to_profile
 
 if [ ! -d .nvm ]; then
   echo "Installing nvm"
