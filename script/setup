@@ -1,6 +1,44 @@
 #!/bin/sh
 
+log() {
+  STRAP_STEP="$*"
+  sudo_refresh
+  echo "--> $*"
+}
+
+check_if_line_exists()
+{
+  log "Checking for: $*"
+  # grep wont care if one or both files dont exist.
+  grep -qsFx "$*" ~/.profile ~/.bash_profile ~/.bashrc ~/.zshrc
+}
+
+add_line_to_profile()
+{
+  profile=$(get_profile_file)
+  log "Adding $* to $profiles"
+  printf "%s\n" "$*" >> "$profile"
+  source $profile
+}
+
+get_profile_file()
+{
+  profile=~/.profile
+  [ -w "$profile" ] || profile=~/.bash_rc
+  [ -w "$profile" ] || profile=~/.zshrc
+  [ -w "$profile" ] || profile=~/.bash_profile
+  [ -w "$profile" ] || profile=~/.profile
+  [ -w "$profile" ] || touch $profile
+  echo $profile  	
+}
+
 cd ~/
+
+# Adding homebrew to PATH
+HOMEBREW_PREFIX=/opt/homebrew
+[ -d $HOMEBREW_PREFIX ] || HOMEBREW_PREFIX=/usr/local/linuxbrew
+LINE_TO_ADD="export PATH=\$PATH:${HOMEBREW_PREFIX}/bin"
+check_if_line_exists || add_line_to_profile
 
 if [ ! -d .nvm ]; then
   echo "Installing nvm"
