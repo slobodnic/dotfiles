@@ -2,7 +2,6 @@
 
 log() {
   STRAP_STEP="$*"
-  sudo_refresh
   echo "--> $*"
 }
 
@@ -42,7 +41,9 @@ LINE_TO_ADD="export PATH=\$PATH:${HOMEBREW_PREFIX}/bin"
 check_if_line_exists || add_line_to_profile
 
 # Turning Terminal color on
-LINE_TO_ADD="export CLICOLOR=1\nalias ls='ls -G'\nalias ll='ls -lG'"
+LINE_TO_ADD="export CLICOLOR=1
+alias ls='ls -G'
+alias ll='ls -lG'"
 check_if_line_exists || add_line_to_profile
 
 if [ ! -d .nvm ]; then
