@@ -28,6 +28,7 @@ get_profile_file()
   [ -f "$profile" ] || profile=~/.bash_profile
   [ -f "$profile" ] || profile=~/.profile
   [ -f "$profile" ] || touch $profile
+  log "Profile file: $profile"
   echo $profile  	
 }
 
