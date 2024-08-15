@@ -41,6 +41,10 @@ HOMEBREW_PREFIX=/opt/homebrew
 LINE_TO_ADD="export PATH=\$PATH:${HOMEBREW_PREFIX}/bin"
 check_if_line_exists || add_line_to_profile
 
+# Turning Terminal color on
+LINE_TO_ADD="export CLICOLOR=1\nalias ls='ls -G'\nalias ll='ls -lG'"
+check_if_line_exists || add_line_to_profile
+
 if [ ! -d .nvm ]; then
   echo "Installing nvm"
   git clone https://github.com/nvm-sh/nvm.git .nvm
