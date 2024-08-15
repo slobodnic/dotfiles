@@ -1,8 +1,17 @@
 #!/bin/sh
 # Run by Strap after installing Brewfile dependencies
+get_profile_file()
+{
+  profile=~/.profile
+  [ -f "$profile" ] || profile=~/.bash_rc
+  [ -f "$profile" ] || profile=~/.zshrc
+  [ -f "$profile" ] || profile=~/.bash_profile
+  [ -f "$profile" ] || profile=~/.profile
+  [ -f "$profile" ] || touch $profile
+  
+  echo $profile  	
+}
 
+echo "Profile file: $(get_profile_file)"
+. $(get_profile_file)
 # sudo apt install -y python3-venv
-
-echo "Installing Node LTS"
-nvm install --lts
-nvm use --lts
