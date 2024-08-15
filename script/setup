@@ -35,6 +35,7 @@ get_profile_file()
 cd ~/
 
 # Adding homebrew to PATH
+echo "Adding Homebrew to PATH"
 HOMEBREW_PREFIX=/opt/homebrew
 [ -d $HOMEBREW_PREFIX ] || HOMEBREW_PREFIX=/usr/local/linuxbrew
 LINE_TO_ADD="export PATH=\$PATH:${HOMEBREW_PREFIX}/bin"
