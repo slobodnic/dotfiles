@@ -23,11 +23,11 @@ add_line_to_profile()
 get_profile_file()
 {
   profile=~/.profile
-  [ -w "$profile" ] || profile=~/.bash_rc
-  [ -w "$profile" ] || profile=~/.zshrc
-  [ -w "$profile" ] || profile=~/.bash_profile
-  [ -w "$profile" ] || profile=~/.profile
-  [ -w "$profile" ] || touch $profile
+  [ -f "$profile" ] || profile=~/.bash_rc
+  [ -f "$profile" ] || profile=~/.zshrc
+  [ -f "$profile" ] || profile=~/.bash_profile
+  [ -f "$profile" ] || profile=~/.profile
+  [ -f "$profile" ] || touch $profile
   echo $profile  	
 }
 
