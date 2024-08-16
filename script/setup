@@ -1,32 +1,46 @@
 #!/bin/sh
 
+# Reset
+Color_Off='\033[0m'       # Text Reset
+
+# Regular Colors
+Black='\033[0;30m'        # Black
+Red='\033[0;31m'          # Red
+Green='\033[0;32m'        # Green
+Yellow='\033[0;33m'       # Yellow
+
 log() {
   STRAP_STEP="$*"
-  echo "--> $*"
+  echo "${Green}$*${Color_Off}"
 }
 
 check_if_line_exists()
 {
-  log "Checking for: $LINE_TO_ADD"
+  echo "Checking for: $LINE_TO_ADD"
   # grep wont care if one or both files dont exist.
-  grep -qsFx "$LINE_TO_ADD" ~/.profile ~/.bash_profile ~/.bashrc ~/.zshrc
+  grep -q -s -F -x "$LINE_TO_ADD" ~/.profile ~/.zprofile ~/.bash_profile ~/.bashrc ~/.zshrc
 }
 
 add_line_to_profile()
 {
   profile=$(get_profile_file)
-  log "Adding $LINE_TO_ADD to $profile"
+  echo "Adding $LINE_TO_ADD to $profile"
   printf "%s\n" "$LINE_TO_ADD" >> "$profile"
-  source $profile
+  . $profile
 }
 
 get_profile_file()
 {
-  profile=~/.profile
-  [ -f "$profile" ] || profile=~/.bash_rc
-  [ -f "$profile" ] || profile=~/.zshrc
-  [ -f "$profile" ] || profile=~/.bash_profile
-  [ -f "$profile" ] || profile=~/.profile
+  if [[ $SHELL == *"bash"* ]]; then
+    profile=~/.profile
+    [ -f "$profile" ] || profile=~/.bash_profile
+    [ -f "$profile" ] || profile=~/.bash_rc
+  elif [[ $SHELL == *"zsh"* ]]; then
+    [ -f "$profile" ] || profile=~/.zprofile
+    [ -f "$profile" ] || profile=~/.zshrc
+  else 
+    profile=~/.profile
+  fi
   [ -f "$profile" ] || touch $profile  
   echo $profile  	
 }
@@ -34,20 +48,20 @@ get_profile_file()
 cd ~/
 
 # Adding homebrew to PATH
-echo "Adding Homebrew to PATH"
+log "Adding Homebrew to PATH"
 HOMEBREW_PREFIX=/opt/homebrew
 [ -d $HOMEBREW_PREFIX ] || HOMEBREW_PREFIX=/usr/local/linuxbrew
 LINE_TO_ADD="export PATH=\$PATH:${HOMEBREW_PREFIX}/bin"
 check_if_line_exists || add_line_to_profile
 
-# Turning Terminal color on
+log Turning Terminal color on
 LINE_TO_ADD="export CLICOLOR=1
 alias ls='ls -G'
 alias ll='ls -lG'"
 check_if_line_exists || add_line_to_profile
 
 if [ ! -d .nvm ]; then
-  echo "Installing nvm"
+  log "Installing nvm"
   git clone https://github.com/nvm-sh/nvm.git .nvm
   cd ~/.nvm
 
@@ -63,6 +77,11 @@ if [ ! -d .nvm ]; then
   source $(get_profile_file)
 fi
 
-if ! grep -q "[[ -r \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\" ]] && . \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\"" ~/.profile; then
-	echo "\n [[ -r \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\" ]] && . \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\"" >> ~/.profile
+log "Turning autocompletions on ..." 
+if [[ $SHELL == *"zsh"* ]]; then
+  LINE_TO_ADD="plugins=(... zsh-completions)
+autoload -U compinit && compinit"
+else
+	LINE_TO_ADD="[[ -r \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\" ]] && . \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\""
 fi
+check_if_line_exists || add_line_to_profile
