@@ -22,4 +22,3 @@ for p in ${plugins[@]}; do
   echo "-- Installing $p"
   code --install-extension $p
 done
-# while read -r line; do code --install-extensions "$line"; done < $plugins
