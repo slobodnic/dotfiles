@@ -17,8 +17,14 @@ echo "Profile file: $(get_profile_file)"
 # sudo apt install -y python3-venv
 
 echo "Installing VSCode plugins"
+existing_plugins=$(code --list-extensions)
 plugins=$(wget -O - -o /dev/null https://raw.githubusercontent.com/slobodnic/dev-strap/main/required/vs-plugins.txt)
-for p in ${plugins[@]}; do 
-  echo "-- Installing $p"
-  code --install-extension $p
+for p in $plugins; do
+  exists=$(echo $existing_plugins | grep -woP $p)
+  if [ "$exists" = "" ]; then
+    echo "-- Installing $p"
+    code --install-extension $p
+  else
+    echo "-- Extension $p exists. Skipping..."
+  fi
 done
