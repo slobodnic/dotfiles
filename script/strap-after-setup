@@ -1,4 +1,14 @@
 #!/bin/sh
+
+# Reset
+Color_Off='\033[0m'       # Text Reset
+
+# Regular Colors
+Black='\033[0;30m'        # Black
+Red='\033[0;31m'          # Red
+Green='\033[0;32m'        # Green
+Yellow='\033[0;33m'       # Yellow
+
 # Run by Strap after installing Brewfile dependencies
 get_profile_file()
 {
@@ -20,11 +30,11 @@ echo "Installing VSCode plugins"
 existing_plugins=$(code --list-extensions)
 plugins=$(wget -O - -o /dev/null https://raw.githubusercontent.com/slobodnic/dev-strap/main/required/vs-plugins.txt)
 for p in $plugins; do
-  exists=$(echo $existing_plugins | grep -woP $p)
+  exists=$(echo $existing_plugins | grep -wo $p)
   if [ "$exists" = "" ]; then
-    echo "-- Installing $p"
+    echo "${Green}Installing $p${NC}"
     code --install-extension $p
   else
-    echo "-- Extension $p exists. Skipping..."
+    echo "${Yellow}Extension $p already installed. Skipping...${NC}"
   fi
 done
