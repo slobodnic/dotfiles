@@ -98,3 +98,5 @@ profile_file=~/.vimrc
 add_line_to_profile
 # Ensure the profile file is reset to the shell profile file
 profile_file=$(get_profile_file)
+
+# TODO: Add oh-my-zsh installation
