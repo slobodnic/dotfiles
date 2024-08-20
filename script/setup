@@ -20,6 +20,11 @@ info() {
 
 add_line_to_profile()
 {  
+  if [ ! -f $profile_file ]; then
+    log "Creating the $profile_file file"
+    touch $profile_file
+  fi
+
   while read line ; do
     info "Checking for: $line in $profile_file" 
     if ! grep -Fqxe "$line" $profile_file ; then
@@ -86,3 +91,10 @@ else
 	LINE_TO_ADD="[[ -r \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\" ]] && . \"$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh\""
 fi
 add_line_to_profile
+
+log "Turning vi color on"
+LINE_TO_ADD="syntax on"
+profile_file=~/.vimrc
+add_line_to_profile
+# Ensure the profile file is reset to the shell profile file
+profile_file=$(get_profile_file)
