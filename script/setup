@@ -92,6 +92,7 @@ else
 fi
 add_line_to_profile
 
+# TODO: this may be working only in MacOS
 log "Enabling Option Arrow key navigation in iTerm2"
 LINE_TO_ADD="# Binding the ALT + Arrows keys to navigate back and forth one word
 bindkey -e
