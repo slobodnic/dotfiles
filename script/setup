@@ -10,12 +10,12 @@ Gray='\033[1;30m'
 
 log() {
   STRAP_STEP="$*"
-  echo "${Green}$*${Color_Off}"
+  echo -e "${Green}$*${Color_Off}"
 }
 
 info() {
   STRAP_STEP="$*"
-  echo "${Gray}$*${Color_Off}"
+  echo -e "${Gray}$*${Color_Off}"
 }
 
 add_line_to_profile()
