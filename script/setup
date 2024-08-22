@@ -92,6 +92,13 @@ else
 fi
 add_line_to_profile
 
+log "Enabling Option Arrow key navigation in iTerm2"
+LINE_TO_ADD="# Binding the ALT + Arrows keys to navigate back and forth one word
+bindkey -e
+bindkey '[C' forward-word
+bindkey '[D' backward-word"
+add_line_to_profile
+
 log "Turning vi color on"
 LINE_TO_ADD="syntax on"
 profile_file=~/.vimrc
