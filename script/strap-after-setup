@@ -30,9 +30,9 @@ plugins=$(wget -O - -o /dev/null https://raw.githubusercontent.com/slobodnic/dev
 for p in $plugins; do
   exists=$(echo $existing_plugins | grep -wo $p)
   if [ "$exists" = "" ]; then
-    echo -e "${Green}Installing $p${NC}"
+    echo -e "${Green}Installing $p${Color_Off}"
     code --install-extension $p
   else
-    echo -e "${Yellow}Extension $p already installed. Skipping...${NC}"
+    echo -e "${Yellow}Extension $p already installed. Skipping...${Color_Off}"
   fi
 done
